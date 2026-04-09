@@ -8,9 +8,9 @@ String[] imageName = new String[3];
 String upArow = "..";
 String dependanciesFolder = "Dependencies";
 String imagesFolder = "Images";
-imageName[1] = "Mona-Lisa-67-805x1200";
-imageName[2] = "bike";
-imageName[3] = "SoccerBall";
+imageName[1] = "bike";
+imageName[2] = "Soccerball";
+imageName[3] = "Mona-Lisa-67-805x1200";
 String fileExension = ".jpg";
 String open = "/";
 
