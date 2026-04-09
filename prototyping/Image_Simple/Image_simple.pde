@@ -1,5 +1,5 @@
 /* Aspect Ratio
-- Basic Code and with While Loop
+ - Basic Code and with While Loop
  */
 //
 //Display
@@ -39,7 +39,7 @@ float imageDivX = beginningButtonSpace;
 float imageDivY = appHeight*4.5/20;
 float imageDivWidth = appWidth*1/2 - beginningButtonSpace*1.5;
 float imageDivHeight = appHeight*1.5/5; //1+1.5=2.5, half of the total height
-
+//
 //Image: Aspect Ratio Algorithm
 //println( float(imageWidth2)/ float(imageHeight2) );
 //Ternary Operator for As[pect Ratio: Q: greatOne v lessOne
@@ -51,15 +51,16 @@ float imageHeightAdjusted1 = ( imageWidth2 >= imageDivWidth ) ? imageWidthAdjust
 println("imageHeightAdjusted1", imageHeightAdjusted1);
 println("Question: is this too big?", "\t\thint ... reposition image() above rect(div)");
 // WHILE LOOP: decrease imageWidth to decrease the calculated imageHeight (% decrease within mutliplication assignment operator)
-while(imageHeightAdjusted1 > imageDivWidth) {}//End WHILE
- imageWidthAdjusted2 *= 0.99;
- imageHeightAdjusted1 = ( imageWidth2 >= imageDivWidth ) ? imageWidthAdjusted2 / image2AspectRation_GreatOne : imageWidthAdjusted2 * image2AspectRation_GreatOne ;
-
-//End While
+while ( imageHeightAdjusted1 > imageDivHeight ) {
+  imageWidthAdjusted2 *= 0.99;
+  imageHeightAdjusted1 = imageWidthAdjusted2 / image2AspectRation_GreatOne ; //CHANGE THIS
+}//End WHILE
+//
 //CAUTION: might need to reposition rect(div) with image()
+//image(image2, imageDivX, imageDivY, imageWidthAdjusted2, imageHeightAdjusted1);
 //DIV: Image
 rect(imageDivX, imageDivY, imageDivWidth, imageDivHeight);
 //
 //image(image1, 0, 0);
-image(image2, imageDivX, imageDivY, imageWidthAdjusted2, imageHeightAdjusted1);f
+image(image2, imageDivX, imageDivY, imageWidthAdjusted2, imageHeightAdjusted1);
 //image(image3, 0, 0);
