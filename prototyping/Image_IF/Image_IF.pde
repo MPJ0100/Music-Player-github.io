@@ -1,5 +1,4 @@
-/* Aspect Ratio
- - Basic Code and with While Loop
+/* Aspect Ratio: any image
  */
 //
 //Display
@@ -40,21 +39,36 @@ float imageDivY = appHeight*4.5/20;
 float imageDivWidth = appWidth*1/2 - beginningButtonSpace*1.5;
 float imageDivHeight = appHeight*1.5/5; //1+1.5=2.5, half of the total height
 //
-//Image: Aspect Ratio Algorithm
+//Image: Aspect Ratio Algorithm for any Image
+float image2AspectRation_GreatOne = ( imageWidth2 > imageHeight2 ) ? float(imageWidth2) / float(imageHeight2) : float(imageHeight2) / float(imageWidth2 ) ;
+float imageWidthAdjusted2 = imageDivWidth;
+float imageHeightAdjusted1;
+if ( imageWidth2 >= imageDivWidth ) {
+  imageHeightAdjusted1 = imageWidthAdjusted2 / image2AspectRation_GreatOne;
+  while ( imageHeightAdjusted1 > imageDivHeight ) {
+    imageWidthAdjusted2 *= 0.99;
+    imageHeightAdjusted1 = imageWidthAdjusted2 / image2AspectRation_GreatOne ; //CHANGE THIS
+  }//End WHILE
+} else {
+  imageHeightAdjusted1 = imageWidthAdjusted2 * image2AspectRation_GreatOne;
+  while ( imageHeightAdjusted1 > imageDivHeight ) {
+    imageWidthAdjusted2 *= 0.99;
+    imageHeightAdjusted1 = imageWidthAdjusted2 * image2AspectRation_GreatOne ; //CHANGE THIS
+  }//End WHILE
+}
+
+
 //println( float(imageWidth2)/ float(imageHeight2) );
 //Ternary Operator for As[pect Ratio: Q: greatOne v lessOne
-float image2AspectRation_GreatOne = ( imageWidth2 > imageHeight2 ) ? float(imageWidth2) / float(imageHeight2) : float(imageHeight2) / float(imageWidth2 ) ;
+
 println("Verify Image Aspect Ratio Greater than One:", image2AspectRation_GreatOne>=1, "\tActual Number:", image2AspectRation_GreatOne);
-float imageWidthAdjusted2 = imageDivWidth;
+
 println("Comparison of imageHeight2 and divHeight:", imageHeight2, imageDivHeight);
-float imageHeightAdjusted1 = ( imageWidth2 >= imageDivWidth ) ? imageWidthAdjusted2 / image2AspectRation_GreatOne : imageWidthAdjusted2 * image2AspectRation_GreatOne ;
+
 println("imageHeightAdjusted1", imageHeightAdjusted1);
 println("Question: is this too big?", "\t\thint ... reposition image() above rect(div)");
 // WHILE LOOP: decrease imageWidth to decrease the calculated imageHeight (% decrease within mutliplication assignment operator)
-while ( imageHeightAdjusted1 > imageDivHeight ) {
-  imageWidthAdjusted2 *= 0.99;
-  imageHeightAdjusted1 = imageWidthAdjusted2 / image2AspectRation_GreatOne ; //CHANGE THIS
-}//End WHILE
+
 //
 //CAUTION: might need to reposition rect(div) with image()
 //image(image2, imageDivX, imageDivY, imageWidthAdjusted2, imageHeightAdjusted1);

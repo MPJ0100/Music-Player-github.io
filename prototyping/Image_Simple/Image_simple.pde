@@ -1,5 +1,6 @@
-/* Aspect Ratio
+/* Aspect Ratio:
  - Basic Code and with While Loop
+ - CAUTION: only one type of image
  */
 //
 //Display
@@ -40,7 +41,7 @@ float imageDivY = appHeight*4.5/20;
 float imageDivWidth = appWidth*1/2 - beginningButtonSpace*1.5;
 float imageDivHeight = appHeight*1.5/5; //1+1.5=2.5, half of the total height
 //
-//Image: Aspect Ratio Algorithm
+//Image: Aspect Ratio Algorithm, only for an image that is bigger (WHILE repeats DIVISON
 //println( float(imageWidth2)/ float(imageHeight2) );
 //Ternary Operator for As[pect Ratio: Q: greatOne v lessOne
 float image2AspectRation_GreatOne = ( imageWidth2 > imageHeight2 ) ? float(imageWidth2) / float(imageHeight2) : float(imageHeight2) / float(imageWidth2 ) ;
