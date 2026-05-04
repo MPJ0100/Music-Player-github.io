@@ -16,8 +16,12 @@ Minim minim;  //initates entire class
 int numberOfSongs = 8; //Best Practcie
 int numberOfSoundEffect = 1;
 AudioPlayer[] playList = new AudioPlayer[ numberOfSongs ];
+AudioMetaData[] playListMetaData = new AudioMetaData[ numberOfSongs ];
 AudioPlayer[] soundEffects = new AudioPlayer[ numberOfSoundEffect ];
 int currentSong = numberOfSongs - numberOfSongs; //ZERO, Math Property
+//
+float songTitleDivX, songTitleDivY, songTitleDivWidth, songTitleDivHeight;
+color purpleInk, resetInk;
 //
 void setup() {
   //Display
@@ -26,14 +30,53 @@ void setup() {
   int appWidth = width; //Best Practice
   int appHeight = height;
   //
-  //Music Loading - STRUCTURED Review
+
+  // ================= LAYOUT SYSTEM =================
+  int numberOfButtons = 13;
+  float widthOfButton = appWidth / (float)numberOfButtons;
+  float beginningButtonSpace = widthOfButton;
+
+  // ================= QUIT BUTTON =================
+  float quitX = appWidth - appHeight * 0.08;
+  float quitY = 0;
+  float quitWidth = appHeight * 0.08;
+  float quitHeight = appHeight * 0.08;
+
+  // ================= LEFT PANEL (SONG TITLE) =================
+  float songTitleDivX = beginningButtonSpace;
+  float songTitleDivY = appHeight * 0.08;
+  float songTitleDivWidth = appWidth * 0.5 - beginningButtonSpace * 1.2;
+  float songTitleDivHeight = appHeight * 0.15;
+
+  // ================= RIGHT PANEL (MESSAGE AREA) =================
+  float messageDIV_X = appWidth * 0.5 + beginningButtonSpace * 0.2;
+  float messageDIV_Y = appHeight * 0.08;
+  float messageDIV_Width = appWidth * 0.5 - beginningButtonSpace * 1.4;
+  float messageDIV_Height = appHeight * 0.55;
+
+  
+
+  rect(songTitleDivX, songTitleDivY, songTitleDivWidth, songTitleDivHeight);
+  rect(messageDIV_X, messageDIV_Y, messageDIV_Width, messageDIV_Height);
+  rect(quitX, quitY, quitWidth, quitHeight);
+
+ 
+
+  
+  // ================= BOTTOM BUTTON STRIP =================
+  float buttonY = appHeight * 0.75;
+  float buttonH = appHeight * 0.1;
+
+  
+    
+   //Music Loading - STRUCTURED Review
   minim = new Minim(this); //Manditory
   String upArrow = "..";
   String open = "/";
   String musicFolder = "Music"; //Developer Specific
   String soundEffectsFolder = "Sound Effects"; //Developer Specific
   String dependanciesFolder = "Dependencies"; //Developer Specific
-  //
+   //
   String[] songName = new String[numberOfSongs];
   songName[currentSong] = "Beat_Your_Competition";
   currentSong++;
@@ -70,12 +113,11 @@ void setup() {
   String soundEffectsDirectory = upArrow + open + upArrow + open + dependanciesFolder + open + soundEffectsFolder + open ; //Concatenation
   String pathway;
   for ( int i=0; i<numberOfSongs; i++ ) {
-   //CAUTION: remove ReadMe.txt
+    //CAUTION: removed ReadMe.txt
     pathway = musicDirectory + songName[i] + fileExtension_mp3; //TO BE Rewritten and deleted once file is LOADED
-    println("Insdei FOR, pathway:", pathway);
     playList[ i ] = minim.loadFile( pathway ); //ERROR: Verify Spelling & Library installed, Sketch / Import Library
+    playListMetaData[ i ] = playList[ i ].getMetaData();
     //CAUTION: not currentSong var
-    println(currentSong);
   }
   pathway = soundEffectsDirectory + soundEffect1 + fileExtension_mp3; //Rewritting FILE
   soundEffects[currentSong] = minim.loadFile( pathway ); //ERROR: Verify Spelling & Library installed, Sketch / Import Library
@@ -94,18 +136,68 @@ void setup() {
     exit();
   }
   //
+  /*Fonts from OS
+   println("Start of Console"); //ERROR: in case CONSOLE Memory not enough
+   String[] fontList = PFont.list(); //To list all fonts available on system
+   printArray(fontList); //For listing all possible fonts to choose, then createFont
+   //Spelling Counts and must compare CONSOLE v Tools / Create Font / Create Font Spelling
+   //Tools / Create Font / Find Font / Do Not Press "OK", known conflict between loadFont() and createFont()
+   */
+  // Students enter all text from Case Study
+  String x = "X";
+  //
+  // Fonts from OS
+  //rect(height) is biggest font is word is the smallest
+  float fontSize1 = songTitleDivHeight; //1:1 Font Height to rectHeight
+  float fontSize2 = messageDIV_Height;
+  float fontSize3 = quitHeight;
+  PFont font; //Font Varaible Name, able to have more than one Font
+  String harrington = "Harrington"; //Spelling of the Font Matters, see PFont.list() v Create Font above
+  font = createFont(harrington, fontSize1);
+  //
+  //Drawing Text
+  purpleInk = #2C08FF; //AP MiniLesson on bit, 8-bit or byte (grey scale, 256), colour
+  color whiteInk = #FFFFFF; //Grey Scale is 255
+  color resetInk = whiteInk;
+  fill(purpleInk); //Ink, hexidecimal copied from Color Selector
+  //Grey Scale 0-255
+  textAlign (CENTER, CENTER); //Align X&Y, see Processing.org / Reference
+  //Values: [LEFT | CENTER | RIGHT] & [TOP | CENTER | BOTTOM | BASELINE]
+  //
+  // Procedure Passing RECT(#2) && fontSize(RECT#)
+  float constantDecrease = 0.99;
+  int iWhile=0;
+  textFont(font, fontSize1); //must include textSize() before text() & textWidth()
+  while ( textWidth(playListMetaData[currentSong].title()) > songTitleDivWidth ) {
+    //println("While #1"); //Infinite WHILE Check
+    iWhile++;
+    if ( iWhile>10000 ) { //>1000 means -1 text or i
+      println("Infninte WHILE Loop");
+      exit();
+    }
+    fontSize1 *= constantDecrease;
+    textFont(font, fontSize1);
+  }
+  text( playListMetaData[currentSong].title(), songTitleDivX, songTitleDivY, songTitleDivWidth, songTitleDivHeight );
+  fill(resetInk);
+  //
+  //playList[currentSong].play();
+  //soundEffects[currentSong].play();
+  //
 }//End Setup
 //
 void draw() {
-  //playList[currentSong].play();
-   soundEffects[currentSong].play();
+  rect(songTitleDivX, songTitleDivY, songTitleDivWidth, songTitleDivHeight);
+  fill(purpleInk);
+  text( playListMetaData[currentSong].title(), songTitleDivX, songTitleDivY, songTitleDivWidth, songTitleDivHeight );
+  fill(resetInk); //
 }//End Draw
 //
 void mousePressed() {
 }//End Mouse Pressed
 //
 void keyPressed() {
-/* Simple Play
+  /* Simple Play
    playList[currentSong].play();
    currentSong++;
    */

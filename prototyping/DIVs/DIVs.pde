@@ -1,72 +1,78 @@
-println(displayWidth, displayHeight);
-fullScreen();
-int appWidth = displayWidth;
-int appHeight = displayHeight;
 
-int paperWidth = 279;
-int paperHeight = 216;
+void setup() {
+  fullScreen();
+}
 
-float SongImageDivX = appWidth * 70 / paperWidth;
-float SongImageDivY = appHeight * 50 / paperHeight;
-float SongImageDivWidth = appWidth * 120 / paperWidth;
-float SongImageDivHeight = appHeight * 90 / paperHeight;
+void draw() {
+  background(20);
 
-float RewindDivX = appWidth * 70 / paperWidth;
-float RewindDivY = appHeight * 170 / paperHeight;
-float RewindDivWidth = appWidth * 25 / paperWidth;
-float RewindDivHeight = appHeight * 25 / paperHeight;
+  int appWidth = width;
+  int appHeight = height;
 
-float PlayDivX = appWidth * 105 / paperWidth;
-float PlayDivY = appHeight * 165 / paperHeight;
-float PlayDivWidth = appWidth * 35 / paperWidth;
-float PlayDivHeight = appHeight * 35 / paperHeight;
+  // ================= LAYOUT SYSTEM =================
+  int numberOfButtons = 13;
+  float widthOfButton = appWidth / (float)numberOfButtons;
+  float beginningButtonSpace = widthOfButton;
 
-float PauseDivX = appWidth * 145 / paperWidth;
-float PauseDivY = appHeight * 170 / paperHeight;
-float PauseDivWidth = appWidth * 25 / paperWidth;
-float PauseDivHeight = appHeight * 25 / paperHeight;
+  // ================= QUIT BUTTON =================
+  float quitX = appWidth - appHeight * 0.08;
+  float quitY = 0;
+  float quitWidth = appHeight * 0.08;
+  float quitHeight = appHeight * 0.08;
 
-float SkipDivX = appWidth * 175 / paperWidth;
-float SkipDivY = appHeight * 170 / paperHeight;
-float SkipDivWidth = appWidth * 25 / paperWidth;
-float SkipDivHeight = appHeight * 25 / paperHeight;
+  // ================= LEFT PANEL (SONG TITLE) =================
+  float songTitleDivX = beginningButtonSpace;
+  float songTitleDivY = appHeight * 0.08;
+  float songTitleDivWidth = appWidth * 0.5 - beginningButtonSpace * 1.2;
+  float songTitleDivHeight = appHeight * 0.15;
 
-float ShuffleDivX = appWidth * 205 / paperWidth;
-float ShuffleDivY = appHeight * 170 / paperHeight;
-float ShuffleDivWidth = appWidth * 20 / paperWidth;
-float ShuffleDivHeight = appHeight * 20 / paperHeight;
+  // ================= RIGHT PANEL (MESSAGE AREA) =================
+  float messageDIV_X = appWidth * 0.5 + beginningButtonSpace * 0.2;
+  float messageDIV_Y = appHeight * 0.08;
+  float messageDIV_Width = appWidth * 0.5 - beginningButtonSpace * 1.4;
+  float messageDIV_Height = appHeight * 0.55;
 
-float RepeatDivX = appWidth * 230 / paperWidth;
-float RepeatDivY = appHeight * 170 / paperHeight;
-float RepeatDivWidth = appWidth * 20 / paperWidth;
-float RepeatDivHeight = appHeight * 20 / paperHeight;
+  // ================= DRAW DIVS =================
+  stroke(255);
+  noFill();
 
-float Note1X = appWidth * 40 / paperWidth;
-float Note1Y = appHeight * 70 / paperHeight;
+  rect(songTitleDivX, songTitleDivY, songTitleDivWidth, songTitleDivHeight);
+  rect(messageDIV_X, messageDIV_Y, messageDIV_Width, messageDIV_Height);
+  rect(quitX, quitY, quitWidth, quitHeight);
 
-float Note2X = appWidth * 220 / paperWidth;
-float Note2Y = appHeight * 100 / paperHeight;
+  // ================= FAKE TEXT =================
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(20);
 
-fill(180);
-rect(SongImageDivX, SongImageDivY, SongImageDivWidth, SongImageDivHeight);
+  text("SONG TITLE AREA", songTitleDivX + songTitleDivWidth/2, songTitleDivY + songTitleDivHeight/2);
 
-fill(120);
-triangle(RewindDivX + RewindDivWidth, RewindDivY, RewindDivX, RewindDivY + RewindDivHeight / 2, RewindDivX + RewindDivWidth, RewindDivY + RewindDivHeight);
-triangle(PlayDivX, PlayDivY, PlayDivX, PlayDivY + PlayDivHeight, PlayDivX + PlayDivWidth, PlayDivY + PlayDivHeight / 2);
+  text("MESSAGE / VISUAL AREA", messageDIV_X + messageDIV_Width/2, messageDIV_Y + messageDIV_Height/2);
 
-rect(PauseDivX, PauseDivY, PauseDivWidth / 3, PauseDivHeight);
-rect(PauseDivX + PauseDivWidth / 2, PauseDivY, PauseDivWidth / 3, PauseDivHeight);
+  text("X", quitX + quitWidth/2, quitY + quitHeight/2);
 
-triangle(SkipDivX, SkipDivY, SkipDivX + SkipDivWidth, SkipDivY + SkipDivHeight / 2, SkipDivX, SkipDivY + SkipDivHeight);
+  // ================= BOTTOM BUTTON STRIP =================
+  float buttonY = appHeight * 0.75;
+  float buttonH = appHeight * 0.1;
 
-line(ShuffleDivX, ShuffleDivY + ShuffleDivHeight, ShuffleDivX + ShuffleDivWidth, ShuffleDivY);
-line(ShuffleDivX, ShuffleDivY, ShuffleDivX + ShuffleDivWidth, ShuffleDivY + ShuffleDivHeight);
+  for (int i = 0; i < numberOfButtons; i++) {
+    float x = i * widthOfButton;
 
-arc(RepeatDivX + RepeatDivWidth / 2, RepeatDivY + RepeatDivHeight / 2, RepeatDivWidth, RepeatDivHeight, PI, TWO_PI);
+    fill(40);
+    stroke(255);
+    rect(x, buttonY, widthOfButton, buttonH);
 
-fill(100);
-ellipse(Note1X, Note1Y, 10, 10);
-line(Note1X, Note1Y, Note1X, Note1Y - 20);
+    fill(255);
+    textSize(12);
 
-ellipse(Note2X, Note2Y, 8, 8);
-line(Note2X, Note2Y, Note2X, Note2Y - 15);
+    if (i == 6) {
+      text("PLAY", x + widthOfButton/2, buttonY + buttonH/2);
+    } else if (i == 5) {
+      text("PREV", x + widthOfButton/2, buttonY + buttonH/2);
+    } else if (i == 7) {
+      text("NEXT", x + widthOfButton/2, buttonY + buttonH/2);
+    } else {
+      text(i, x + widthOfButton/2, buttonY + buttonH/2);
+    }
+  }
+}
